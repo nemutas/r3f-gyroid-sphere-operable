@@ -1,9 +1,10 @@
 # About
-In this application, we have replicated the model of [Richard Mattka's site](https://richardmattka.com/).
+In this application, we have replicated the model of [Richard Mattka's site](https://richardmattka.com/).<br>
+The gyoroid parameters can be manipulated to create a variety of shapes.
 
-https://nemutas.github.io/r3f-gyroid-sphere/
+https://nemutas.github.io/r3f-gyroid-sphere-operable/
 
-![20220315006](https://user-images.githubusercontent.com/46724121/158200864-0731cc59-13c7-4add-a71d-611a610704b2.gif)
+![output(video-cutter-js com)](https://user-images.githubusercontent.com/46724121/158643883-9a77a4c3-dfd7-4e81-ad78-f8313e547161.gif)
 
 # Technology
 
