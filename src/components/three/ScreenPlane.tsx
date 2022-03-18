@@ -10,6 +10,7 @@ const datas = {
 	scaleY: 5,
 	scaleZ: 5,
 	distortion: 0,
+	creepiness: false,
 	rotation: true
 }
 
@@ -19,6 +20,7 @@ export const ScreenPlane: VFC = () => {
 	gui.addNumericSlider(datas, 'scaleY', 0, 10, 0.1, 'scale y')
 	gui.addNumericSlider(datas, 'scaleZ', 0, 10, 0.1, 'scale z')
 	gui.addNumericSlider(datas, 'distortion', 0, 1, 0.01)
+	gui.addCheckBox(datas, 'creepiness')
 	gui.addCheckBox(datas, 'rotation')
 
 	const shader: THREE.Shader = {
@@ -27,7 +29,8 @@ export const ScreenPlane: VFC = () => {
 			u_aspect: { value: 0 },
 			u_mouse: { value: new THREE.Vector2(0, 0) },
 			u_scale: { value: new THREE.Vector3() },
-			u_distortion: { value: datas.distortion }
+			u_distortion: { value: datas.distortion },
+			u_creepiness: { value: datas.creepiness }
 		},
 		vertexShader: vertexShader,
 		fragmentShader: fragmentShader
@@ -40,6 +43,7 @@ export const ScreenPlane: VFC = () => {
 		shader.uniforms.u_mouse.value.lerp(vec.set(mouse.x / 2, mouse.y / 2), 0.05)
 		shader.uniforms.u_scale.value.set(datas.scaleX, datas.scaleY, datas.scaleZ)
 		shader.uniforms.u_distortion.value = datas.distortion
+		shader.uniforms.u_creepiness.value = datas.creepiness
 	})
 
 	return (
@@ -64,6 +68,7 @@ uniform float u_aspect;
 uniform vec2 u_mouse;
 uniform vec3 u_scale;
 uniform float u_distortion;
+uniform bool u_creepiness;
 varying vec2 v_uv;
 
 const float PI = 3.14159265358979;
@@ -96,7 +101,11 @@ float gyroid(in vec3 p, float t) {
   vec3 scale = u_scale + 1.0;
   p *= scale;
   vec3 p2 = mix(p, p.yzx, u_distortion);
+  
   float g = dot(sin(p), cos(p2)) / length(scale);
+  float gc = abs(dot(sin(p), cos(p2)) / length(scale)) - 0.04;
+  g = u_creepiness ? gc : g;
+
   return g;
 }
 
