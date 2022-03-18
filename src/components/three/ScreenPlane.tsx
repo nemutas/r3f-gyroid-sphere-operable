@@ -102,9 +102,9 @@ float gyroid(in vec3 p, float t) {
   p *= scale;
   vec3 p2 = mix(p, p.yzx, u_distortion);
   
-  float g = dot(sin(p), cos(p2)) / length(scale);
-  float gc = abs(dot(sin(p), cos(p2)) / length(scale)) - 0.04;
-  g = u_creepiness ? gc : g;
+  float g;
+  if (u_creepiness) g = abs(dot(sin(p), cos(p2)) / length(scale)) - 0.04;
+  else              g = dot(sin(p), cos(p2)) / length(scale);
 
   return g;
 }
