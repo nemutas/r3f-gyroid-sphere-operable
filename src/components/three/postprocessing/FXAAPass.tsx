@@ -14,8 +14,7 @@ export const FXAAPass: VFC = () => {
 	const passRef = useRef<ShaderPass>(null)
 	const { size } = useThree()
 
-	const gui = GUIController.instance.setFolder('FXAA')
-	gui.setOpen(false)
+	const gui = GUIController.instance.setFolder('FXAA').open(false)
 	gui.addCheckBox(datas, 'enabled')
 
 	const update = () => {

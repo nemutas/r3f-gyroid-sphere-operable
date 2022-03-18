@@ -14,8 +14,7 @@ const datas = {
 export const FocusPass: VFC = () => {
 	const passRef = useRef<ShaderPass>(null)
 
-	const gui = GUIController.instance.setFolder('Focus')
-	gui.setOpen(false)
+	const gui = GUIController.instance.setFolder('Focus').open(false)
 	gui.addCheckBox(datas, 'enabled')
 	gui.addNumericSlider(datas, 'focus', -0.5, 0.5, 0.01)
 	gui.addNumericSlider(datas, 'blur', 0, 1, 0.01)

@@ -17,8 +17,7 @@ const datas = {
 export const BloomPass: VFC = () => {
 	const passRef = useRef<UnrealBloomPass>(null)
 
-	const gui = GUIController.instance.setFolder('Bloom')
-	gui.setOpen(false)
+	const gui = GUIController.instance.setFolder('Bloom').open(false)
 	gui.addCheckBox(datas, 'enabled')
 	gui.addNumericSlider(datas, 'exposure', 0.1, 2, 0.01)
 	gui.addNumericSlider(datas, 'strength', 0, 10, 0.1)

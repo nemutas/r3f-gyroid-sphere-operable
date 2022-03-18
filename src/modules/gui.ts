@@ -33,8 +33,8 @@ export class GUIController {
 		return folder
 	}
 
-	private _uncontainedName = (gui: GUI, name: string) => {
-		return !gui.controllers.find(c => c._name === name)
+	private _controller = (gui: GUI, name: string) => {
+		return gui.controllers.find(c => c._name === name)
 	}
 
 	setFolder = (name: string) => {
@@ -42,8 +42,9 @@ export class GUIController {
 		return this
 	}
 
-	setOpen = (open: boolean) => {
+	open = (open: boolean) => {
 		this._getGui(this._currentFolderName).open(open)
+		return this
 	}
 
 	/**
@@ -60,9 +61,11 @@ export class GUIController {
 		const controllerName = displayName ? displayName : propertyName
 		const gui = this._getGui(folderName)
 
-		if (this._uncontainedName(gui, controllerName)) {
-			gui.addColor(obj, propertyName, rgbScale).name(controllerName)
+		let controller = this._controller(gui, controllerName)
+		if (!controller) {
+			controller = gui.addColor(obj, propertyName, rgbScale).name(controllerName)
 		}
+		return controller
 	}
 
 	/**
@@ -81,9 +84,11 @@ export class GUIController {
 		const controllerName = displayName ? displayName : propertyName
 		const gui = this._getGui(folderName)
 
-		if (this._uncontainedName(gui, controllerName)) {
-			gui.add(obj, propertyName, min, max, step).name(controllerName)
+		let controller = this._controller(gui, controllerName)
+		if (!controller) {
+			controller = gui.add(obj, propertyName, min, max, step).name(controllerName)
 		}
+		return controller
 	}
 
 	/**
@@ -100,9 +105,11 @@ export class GUIController {
 		const controllerName = displayName ? displayName : propertyName
 		const gui = this._getGui(folderName)
 
-		if (this._uncontainedName(gui, controllerName)) {
-			gui.add(obj, propertyName, list).name(controllerName)
+		let controller = this._controller(gui, controllerName)
+		if (!controller) {
+			controller = gui.add(obj, propertyName, list).name(controllerName)
 		}
+		return controller
 	}
 
 	/**
@@ -119,9 +126,11 @@ export class GUIController {
 		const controllerName = displayName ? displayName : propertyName
 		const gui = this._getGui(folderName)
 
-		if (this._uncontainedName(gui, controllerName)) {
-			gui.add(obj, propertyName).name(controllerName)
+		let controller = this._controller(gui, controllerName)
+		if (!controller) {
+			controller = gui.add(obj, propertyName).name(controllerName)
 		}
+		return controller
 	}
 
 	/**
@@ -138,8 +147,10 @@ export class GUIController {
 		const controllerName = displayName ? displayName : propertyName
 		const gui = this._getGui(folderName)
 
-		if (this._uncontainedName(gui, controllerName)) {
-			gui.add(obj, propertyName).name(controllerName)
+		let controller = this._controller(gui, controllerName)
+		if (!controller) {
+			controller = gui.add(obj, propertyName).name(controllerName)
 		}
+		return controller
 	}
 }
