@@ -5,7 +5,20 @@ import { useFrame } from '@react-three/fiber';
 import { fresnel, rotate } from '../../modules/glsl';
 import { GUIController } from '../../modules/gui';
 
+const rand = (min: number, max: number, digit: number) => {
+	let num = Math.random() * (max - min) + min
+	num = Number(num.toFixed(digit))
+	return num
+}
+
 const datas = {
+	random: () => {
+		datas.scaleX = rand(0, 10, 1)
+		datas.scaleY = rand(0, 10, 1)
+		datas.scaleZ = rand(0, 10, 1)
+		datas.distortion = rand(0, 1, 2)
+		datas.creepiness = rand(0, 1, 2) > 0.5
+	},
 	scaleX: 5,
 	scaleY: 5,
 	scaleZ: 5,
@@ -16,11 +29,12 @@ const datas = {
 
 export const ScreenPlane: VFC = () => {
 	const gui = GUIController.instance.setFolder('Uniforms')
-	gui.addNumericSlider(datas, 'scaleX', 0, 10, 0.1, 'scale x')
-	gui.addNumericSlider(datas, 'scaleY', 0, 10, 0.1, 'scale y')
-	gui.addNumericSlider(datas, 'scaleZ', 0, 10, 0.1, 'scale z')
-	gui.addNumericSlider(datas, 'distortion', 0, 1, 0.01)
-	gui.addCheckBox(datas, 'creepiness')
+	gui.addButton(datas, 'random')
+	gui.addNumericSlider(datas, 'scaleX', 0, 10, 0.1, 'scale x').listen()
+	gui.addNumericSlider(datas, 'scaleY', 0, 10, 0.1, 'scale y').listen()
+	gui.addNumericSlider(datas, 'scaleZ', 0, 10, 0.1, 'scale z').listen()
+	gui.addNumericSlider(datas, 'distortion', 0, 1, 0.01).listen()
+	gui.addCheckBox(datas, 'creepiness').listen()
 	gui.addCheckBox(datas, 'rotation')
 
 	const shader: THREE.Shader = {
